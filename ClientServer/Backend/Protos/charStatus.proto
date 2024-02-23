@@ -1,0 +1,47 @@
+syntax = "proto3";
+
+package CharStatus;
+
+// The greeting service definition.
+service CharStatus {
+  // Sends a greeting
+  rpc Move (Status) returns (MoveAck);
+}
+
+//Status of the character using the GRPC
+message Status
+{
+	message DeltaPosition 
+	{
+		uint32 deltaX = 1;
+		uint32 deltaY = 2;
+		uint32 deltaZ = 3;
+		float deltaRoll = 4;
+		float deltaPitch = 5;
+		float deltaYaw = 6;
+	}
+
+	message characterStatus
+	{
+		uint32 MaxHitPoints = 1;
+		uint32 MaxManaPoints = 2;
+		uint32 HitPoints = 3;
+		uint32 ManaPoints = 4;
+		uint32 posX = 5;
+		uint32 posY = 6;
+		uint32 MapID = 7;
+		string Name = 8;
+	}
+}
+
+//Server answer
+enum MoveResult {
+	OK = 0;
+	IMPOSSIBLE_TO_MOVE = 1;
+}
+
+// The response message containing the greetings.
+message MoveAck 
+{
+	MoveResult result = 1;
+}
