@@ -13,9 +13,8 @@ namespace Backend
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
-            app.MapGrpcService<Backend.Services.CharStatusService>();
-
-
+            app.MapGrpcService<Services.CharStatusService>();
+            app.MapGrpcService<Services.AccountLoginServices>();
             app.MapGet("/", () => "Communication with gRPC endpoints must be made through a gRPC client. To learn how to create a client, visit: https://go.microsoft.com/fwlink/?linkid=2086909");
 
             app.Run();

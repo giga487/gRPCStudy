@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -8,9 +8,11 @@
 
   <ItemGroup>
     <None Remove="Protos\CharStatus.proto" />
+    <None Remove="Protos\login.proto" />
   </ItemGroup>
 
   <ItemGroup>
+    <Protobuf Include="Protos\login.proto" GrpcServices="Server" />
     <Protobuf Include="Protos\charStatus.proto" GrpcServices="Server" />
   </ItemGroup>
 
