@@ -1,4 +1,6 @@
 
+using Core.Server;
+
 namespace Backend
 {
     public class Program
@@ -7,8 +9,12 @@ namespace Backend
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            GameServer gameServer = new GameServer();
+            builder.Services.AddSingleton(gameServer);
+
             // Add services to the container.
             builder.Services.AddGrpc();
+            // ADD AUTHENTICATIO WITH JWT
 
             var app = builder.Build();
 

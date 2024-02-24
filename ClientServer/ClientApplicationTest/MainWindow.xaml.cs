@@ -1,4 +1,6 @@
-﻿using CommunicationLayer.Login;
+﻿using ClientCore;
+using ClientCore.Movable;
+using CommunicationLayer.Login;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -20,6 +22,8 @@ namespace ClientApplicationTest
         public MainWindow()
         {
             InitializeComponent();
+
+            IMobile player = new Player();
         }
 
         private async void LoginBtn_Click(object sender, RoutedEventArgs e)

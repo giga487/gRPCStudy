@@ -9,7 +9,7 @@ namespace CommunicationLayer.Login
 {
     public class ClientLogin
     {
-        public GrpcChannel Channel { get; private set; } = null;
+        public GrpcChannel? Channel { get; private set; } = null;
         public Account.AccountLogin.AccountLoginClient AccountLoginClient { get; private set; }
         public ClientLogin(Uri host)
         {

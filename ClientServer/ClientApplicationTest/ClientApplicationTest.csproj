@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ClientCore\ClientCore.csproj" />
     <ProjectReference Include="..\CommunicationLayer\ClientCommunicationLayer.csproj" />
   </ItemGroup>
 

@@ -1,6 +1,4 @@
-﻿using CharStatus;
-using Core.Space;
-using Grpc.Core;
+﻿using Core.Space;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +11,6 @@ namespace Core.LifeThings
     public interface ILocalizable
     {
         string Name { get; }
-        Pose Pose { get; }        
-        MoveAck Move(CharStatus.DeltaPosition pos);
+        Pose Pose { get; }       
     }
 }
