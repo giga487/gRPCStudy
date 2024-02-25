@@ -21,14 +21,18 @@ namespace Backend.Services
 
         public override Task<AccountResponse> Login(Account.Account request, ServerCallContext context)
         {
-
             var rs = new AccountResponse()
             {
                 Response = AccountAck.Ok,
                 Hash = Guid.NewGuid().ToString()
             };
 
-            //GameServer.DBInterface.AccountGUIDs[request.Email] = rs.Hash;
+            GameServer?.AccountInterface?.UpdateLoginInfo(new Core.Account.AccountInfo()
+            {
+                Hash = rs.Hash,
+                Password = request.Password,
+                UserName = request.Email
+            });
 
             //Console.WriteLine($"Account {request.Email} has logged - {rs.Hash}");
             return Task.FromResult(rs);

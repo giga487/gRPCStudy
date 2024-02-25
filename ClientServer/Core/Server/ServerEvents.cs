@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,10 @@ namespace Core.Server
     {
         public class NewAccountArgs : EventArgs
         {
+            public NewAccountArgs(AccountInfo info)
+            {
 
+            }
         }
         public EventHandler<NewAccountArgs> NewAccountEvent { get; set; } = null;
 

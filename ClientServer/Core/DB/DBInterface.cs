@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Account;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DBData
 {
-    public class DBInterface
+    public abstract class DBInterface
     {
         public class ConnectionError : Exception
         {
@@ -22,14 +23,12 @@ namespace DBData
             CONNECTION_BAD,
         }
 
-        public Dictionary<string, string> AccountGUIDs = new Dictionary<string, string>();
-
         public DBInterface()
         {
             //PER ORA NON FA UN CAZZO
         }
 
-        public virtual DB_RESPONSE_TYPE Add<T>()
+        public virtual DB_RESPONSE_TYPE Update<T>(T account) where T: IDataInfo
         {
             return DB_RESPONSE_TYPE.OK;
         }
