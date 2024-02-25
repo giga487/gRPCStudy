@@ -35,8 +35,40 @@ namespace ClientApplicationTest
 
             if (response != null)
             {
-
+                AddLog($"{response.Response} - {response.Hash}\n");
             }
+        }
+
+        private List<string> _messageList = new List<string>();
+        public void AddLog(string text)
+        {
+            _messageList.Add(text);
+
+            if (_messageList.Count > 10)
+            {
+                _messageList.RemoveAt(0);
+            }
+
+            logtxtbox.Clear();
+            
+            foreach(string message in _messageList)
+            {
+                logtxtbox.Text += message;
+            }
+        }
+
+        public void AddLogCrossThread(string text)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                AddLog(text);
+
+            }));
+        }
+
+        private void createBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 

@@ -24,7 +24,7 @@ namespace Core.DB.Account
 
         private Dictionary<string, AccountInfo> _dict = new Dictionary<string, AccountInfo>();
         private ILogger? _logger { get; set; } = null;
-        public AccountDB(ILogger logger = null)
+        public AccountDB(ILogger? logger)
         {
             if (logger != null)
                 _logger= logger;
@@ -61,6 +61,7 @@ namespace Core.DB.Account
 
             return LOGIN_RESULT.OK;
         }
+
         public LOGIN_RESULT UpdateAccount(AccountInfo info)
         {
             try

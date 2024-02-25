@@ -9,6 +9,7 @@ namespace Core.LifeThings
     public class Player: Mobile.Mobile
     {
         Guid authenticationToken = Guid.Empty;
+
         //public override MoveAck Move(DeltaPosition pos)
         //{
         //    if (Service is null)

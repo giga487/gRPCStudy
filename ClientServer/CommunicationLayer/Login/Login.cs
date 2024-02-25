@@ -1,4 +1,5 @@
-﻿using Grpc.Net.Client;
+﻿using AccountProtocol;
+using Grpc.Net.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,30 +11,20 @@ namespace CommunicationLayer.Login
     public class ClientLogin
     {
         public GrpcChannel? Channel { get; private set; } = null;
-        public Account.AccountLogin.AccountLoginClient AccountLoginClient { get; private set; }
+        public AccountProtocol.AccountLogin.AccountLoginClient AccountLoginClient { get; private set; }
+        public ClientCommunicationLayer.Login.LoggedAccount? Account { get; private set; } = null;
         public ClientLogin(Uri host)
         {
             Channel = GrpcChannel.ForAddress(host);
 
-            AccountLoginClient = new Account.AccountLogin.AccountLoginClient(Channel);
-
-            //Action loginAction = () =>
-            //{
-            //    if (Channel != null)
-            //    {
-            //        var reply = Login(user, pwd);
-            //    }
-            //};
-
-            //Task.Run(loginAction);
-
+            AccountLoginClient = new AccountProtocol.AccountLogin.AccountLoginClient(Channel);
         }
 
-        public async Task<Account.AccountResponse> Login(string user, string pwd)
+        public async Task<AccountProtocol.AccountResponse> Login(string user, string pwd)
         {
             try
             {
-                var reply = await AccountLoginClient.LoginAsync(new Account.Account() { Email = user, Password = pwd });
+                var reply = await AccountLoginClient.LoginAsync(new AccountProtocol.Account() { Email = user, Password = pwd });
 
                 if (reply != null)
                 {
@@ -44,12 +35,11 @@ namespace CommunicationLayer.Login
             }
             catch
             {
-                return new Account.AccountResponse()
+                return new AccountProtocol.AccountResponse()
                 {
-                    Response = Account.AccountAck.BadConnection
+                    Response = AccountAck.BadConnection
                 };
             }
         }
-
     }
 }

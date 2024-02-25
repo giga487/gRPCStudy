@@ -1,13 +1,11 @@
-﻿using Account;
+﻿using AccountProtocol;
 using CharStatus;
 using Core.Server;
-
-//using Core.Server;
 using Grpc.Core;
 
 namespace Backend.Services
 {
-    public class AccountLoginServices : Account.AccountLogin.AccountLoginBase
+    public class AccountLoginServices : AccountLogin.AccountLoginBase
     {
         public GameServer GameServer { get; set; }
         public AccountLoginServices(GameServer server)
@@ -19,12 +17,12 @@ namespace Backend.Services
         }
 
 
-        public override Task<AccountResponse> Login(Account.Account request, ServerCallContext context)
+        public override Task<AccountResponse> Login(Account request, ServerCallContext context)
         {
             var rs = new AccountResponse()
             {
                 Response = AccountAck.Ok,
-                Hash = Guid.NewGuid().ToString()
+                Hash = Guid.NewGuid().ToString(),
             };
 
             GameServer?.AccountInterface?.UpdateLoginInfo(new Core.Account.AccountInfo()

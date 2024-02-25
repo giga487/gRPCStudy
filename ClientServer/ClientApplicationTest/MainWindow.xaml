@@ -7,11 +7,24 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="465" Width="731">
     <Grid Margin="0,0,0,-6">
-        <GroupBox Header="Login Data" Margin="10,10,403,272" Background="AliceBlue">
-            <Grid Margin="0,0,-2,0" Height="163">
+        <GroupBox Header="Login Data" Margin="10,10,403,350" Background="AliceBlue">
+            <Grid Margin="0,0,-2,0" Height="71">
                 <TextBox x:Name="usernameTB" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="User@User.it" TextAlignment="Right" VerticalAlignment="Top" Width="120"/>
-                <Button x:Name="LoginBtn" Content="Connect" Margin="0,102,10,34" HorizontalAlignment="Right" Width="54" Click="LoginBtn_Click"/>
+                <Button x:Name="loginBtn" Content="Connect" Margin="0,40,15,0" HorizontalAlignment="Right" Width="60" Click="LoginBtn_Click" Height="28" VerticalAlignment="Top"/>
+                <ComboBox x:Name="serialCombobox" HorizontalAlignment="Left" Margin="10,43,0,0" VerticalAlignment="Top" Width="120"/>
             </Grid>
         </GroupBox>
+        <GroupBox Header="Create PG" Margin="10,119,403,221" Background="AliceBlue">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Button Content="Create PG" HorizontalAlignment="Left" Margin="234,55,0,0" VerticalAlignment="Top" Width="62" Height="27"/>
+                <TextBox x:Name="pgNameTxt" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="121" Height="25"/>
+            </Grid>
+        </GroupBox>
+        <TextBox x:Name="logtxtbox" HorizontalAlignment="Left" Margin="407,22,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="314" Height="423"/>
+
+
     </Grid>
 </Window>
