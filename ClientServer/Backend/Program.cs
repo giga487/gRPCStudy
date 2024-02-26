@@ -1,4 +1,5 @@
 
+using Core.Account;
 using Core.Server;
 
 namespace Backend
@@ -11,7 +12,6 @@ namespace Backend
 
             GameServer gameServer = new GameServer();
             builder.Services.AddSingleton(gameServer);
-
             // Add services to the container.
             builder.Services.AddGrpc();
             // ADD AUTHENTICATIO WITH JWT

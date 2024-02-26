@@ -1,16 +1,15 @@
-﻿using Core.Space;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.LifeThings
+namespace Core.Mobile
 {
-
-    public interface ILocalizable
+    public interface ILocalizableProperties
     {
         string Name { get; }
-        Pose Pose { get; }       
+        HairType HairType { get; }
+
     }
 }

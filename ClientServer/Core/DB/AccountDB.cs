@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Core.Mobile;
 
 namespace Core.DB.Account
 {
-    public class AccountDB: DBInterface
+    public class AccountDB : DBInterface
     {
         public enum LOGIN_RESULT
         {
@@ -22,7 +23,14 @@ namespace Core.DB.Account
             YOURMUMFAULT
         }
 
+        public enum PG_CREATION_RESULT
+        {
+            OK,
+            BAD
+        }
+
         private Dictionary<string, AccountInfo> _dict = new Dictionary<string, AccountInfo>();
+
         private ILogger? _logger { get; set; } = null;
         public AccountDB(ILogger? logger)
         {
@@ -78,5 +86,61 @@ namespace Core.DB.Account
             return LOGIN_RESULT.OK;
         }
 
+        public PG_CREATION_RESULT CreateNewCharacter(AccountInfo info, ILocalizableProperties prop)
+        {
+            try
+            {
+                if (_dict.TryGetValue(info.UserName, out var value))
+                {
+                    value?.Characters?.Add(new Core.Player.Player(prop));
+                    _logger?.LogInformation("Update account with new character");
+                    return PG_CREATION_RESULT.OK;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogWarning($"BAD {ex.Message}");
+                return PG_CREATION_RESULT.BAD;
+            }
+
+            return PG_CREATION_RESULT.OK;
+        }
+
+        public AccountInfo? RetrieveAccountInfo(string user)
+        {
+            AccountInfo? accountInfo = null;
+
+            try
+            {
+                if (_dict.TryGetValue(user, out accountInfo))
+                {
+                    return accountInfo;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogWarning($"BAD {ex.Message}");
+            }
+
+            return accountInfo ?? null;
+
+        }
+
+        /// <summary>
+        /// If account username and hash is ok, you can login
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <param name="accountInfo"></param>
+        /// <returns></returns>
+        public bool HashIsOk(string hash, AccountInfo accountInfo)
+        {
+            if (string.Compare(hash, accountInfo?.Hash, true) == 0)
+            {
+                return true;
+            }
+
+            return false;
+
+        }
     }
 }

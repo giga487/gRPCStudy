@@ -32,11 +32,15 @@ enum AccountAck {
 	OK = 0;
 	WRONG_PASSWORD = 1;
 	BAD_CONNECTION = 2;
+	GENERIC_ERROR = 3;
 }
 
 message NewChar
 {
 	string Name = 1;
+	HairStyleT Hair = 2;
+	string Token = 3;
+	string Username = 4;
 }
 
 message NewCharResponse
@@ -49,4 +53,10 @@ enum NewCharResponseT
 	PG_CREATED = 0;
 	NO_PG = 1;
 	NAME_FORBIDDEN = 2;
+}
+
+enum HairStyleT
+{
+	BALD = 0;
+	LONG = 1;
 }

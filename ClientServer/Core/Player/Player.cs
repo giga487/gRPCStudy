@@ -1,14 +1,21 @@
-﻿using System;
+﻿using Core.Mobile;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Core.LifeThings
+namespace Core.Player
 {
-    public class Player: Mobile.Mobile
+    public class Player : Mobile.LifeThings.Mobile
     {
         Guid authenticationToken = Guid.Empty;
+        public Player(ILocalizableProperties props) : base(props.Name, props)
+        {
+
+        }
+
+
 
         //public override MoveAck Move(DeltaPosition pos)
         //{
