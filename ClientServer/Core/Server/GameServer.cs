@@ -17,11 +17,13 @@ namespace Core.Server
         public AccountDB? AccountInterface { get; private set; } = null;
         public Authentication? Auth { get; private set; } = null;
         public ILogger? ServerLogger { get; private set; } = null;
+
         public GameServer()
         {
+            LoadConfiguration loadConfiguration = new LoadConfiguration();
 
-            AccountInterface = new AccountDB(ServerLogger);
-            SerialManager = new SerialManager(ServerLogger);
+            SerialManager = new SerialManager(ServerLogger, loadConfiguration?.SerialConfig);
+            AccountInterface = new AccountDB(ServerLogger, SerialManager);
             Auth = new Authentication(AccountInterface);
             /* Qui, vanno fatte un miliardo di cose */
         }

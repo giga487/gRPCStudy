@@ -8,13 +8,14 @@ namespace Core.Mobile.LifeThings
         public string Name { get; set; } = string.Empty;
         public Pose Pose { get; set; } = new Pose();
         public ILocalizableProperties? AestheticProperties { get; private set; } = null;
-        public Serial? Serial { get; private set; } = null;
+        public Serial? Serial { get; set; } = null;
+
         public Mobile(string name, ILocalizableProperties props)
         {
             Name = name;
             AestheticProperties = props;
 
-            
+
         }
         //public abstract ILocalizable CreateMobile(ILocalizableProperties props, string name);
 

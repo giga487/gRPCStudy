@@ -41,7 +41,7 @@ namespace Core.Account
 
             if (AuthIsOk(username, password, accountInfo))
             {
-                accountInfo.Hash = Guid.NewGuid().ToString();
+                accountInfo.Token = new Token();
                 info = accountInfo;
 
                 return AuthenticationT.OK;
@@ -49,6 +49,8 @@ namespace Core.Account
             else
                 return AuthenticationT.BADPASSWORD;
         }
+
+
 
         public bool AuthIsOk(string username, string password, AccountInfo? info)
         {

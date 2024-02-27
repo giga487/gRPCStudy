@@ -13,6 +13,8 @@ namespace CommunicationLayer.Login
         public GrpcChannel? Channel { get; private set; } = null;
         public AccountProtocol.AccountLogin.AccountLoginClient AccountLoginClient { get; private set; }
         public ClientCommunicationLayer.Login.LoggedAccount? Account { get; private set; } = null;
+        public string Token { get; private set; } = string.Empty;
+        public string UserName { get; private set; } = string.Empty;
         public ClientLogin(Uri host)
         {
             Channel = GrpcChannel.ForAddress(host);
@@ -28,6 +30,8 @@ namespace CommunicationLayer.Login
 
                 if (reply != null)
                 {
+                    UserName = user;
+                    Token = reply.Hash;
                     return reply;
                 }
 
@@ -40,6 +44,28 @@ namespace CommunicationLayer.Login
                     Response = AccountAck.BadConnection
                 };
             }
+        }
+
+        public async Task<NewCharResponseT> CreateNewCharacter(string name)
+        {
+            var newChar = new NewChar()
+            {
+                Hair = HairStyleT.Bald,
+                Token = Token,
+                Name = name,
+                Username = UserName
+            };
+
+            try
+            {
+                var reply = await AccountLoginClient.CreateNewCharAsync(newChar);
+                return reply.Answer;
+            }
+            catch
+            {
+                return NewCharResponseT.NoPg;
+            }
+
         }
     }
 }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Core.Mobile;
+using Core.Server;
 
 namespace Core.DB.Account
 {
@@ -32,10 +33,13 @@ namespace Core.DB.Account
         private Dictionary<string, AccountInfo> _dict = new Dictionary<string, AccountInfo>();
 
         private ILogger? _logger { get; set; } = null;
-        public AccountDB(ILogger? logger)
+        private SerialManager? _serialManager { get; set; } = null;
+        public AccountDB(ILogger? logger, SerialManager? serialM)
         {
             if (logger != null)
                 _logger= logger;
+
+            _serialManager = serialM;
         }
 
         public LOGIN_RESULT UpdateLoginInfo(AccountInfo account)
@@ -92,7 +96,8 @@ namespace Core.DB.Account
             {
                 if (_dict.TryGetValue(info.UserName, out var value))
                 {
-                    value?.Characters?.Add(new Core.Player.Player(prop));
+                    _serialManager?.CreateNewCharacter(new Core.Player.Player(prop), info);
+
                     _logger?.LogInformation("Update account with new character");
                     return PG_CREATION_RESULT.OK;
                 }
@@ -134,7 +139,7 @@ namespace Core.DB.Account
         /// <returns></returns>
         public bool HashIsOk(string hash, AccountInfo accountInfo)
         {
-            if (string.Compare(hash, accountInfo?.Hash, true) == 0)
+            if (string.Compare(hash, accountInfo?.Token?.Hash, true) == 0)
             {
                 return true;
             }

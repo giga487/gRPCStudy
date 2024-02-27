@@ -19,6 +19,7 @@ namespace ClientApplicationTest
     /// </summary>
     public partial class MainWindow : Window
     {
+        ClientLogin? clientLogin { get; set; } = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -30,12 +31,17 @@ namespace ClientApplicationTest
         {
             string username = usernameTB.Text;
 
-            ClientLogin clientLogin = new ClientLogin(new UriBuilder("http", "127.0.0.1", 5297).Uri);
+            clientLogin = new ClientLogin(new UriBuilder("http", "127.0.0.1", 5297).Uri);
             var response = await clientLogin.Login(username, "stocazzo");
 
             if (response != null)
             {
                 AddLog($"{response.Response} - {response.Hash}\n");
+                serialCombobox.Items.Clear();
+                foreach (var id in response.CharSerial)
+                {
+                    serialCombobox.Items.Add(id.ToString());
+                }
             }
         }
 
@@ -69,6 +75,16 @@ namespace ClientApplicationTest
         private void createBtn_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void pgcreationBtn_Click(object sender, RoutedEventArgs e)
+        {
+            clientLogin?.CreateNewCharacter("pippo");
         }
     }
 
