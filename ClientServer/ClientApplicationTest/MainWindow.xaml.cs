@@ -19,7 +19,7 @@ namespace ClientApplicationTest
     /// </summary>
     public partial class MainWindow : Window
     {
-        ClientLogin? clientLogin { get; set; } = null;
+        ClientCommunication? clientLogin { get; set; } = null;
         public MainWindow()
         {
             InitializeComponent();
@@ -31,7 +31,7 @@ namespace ClientApplicationTest
         {
             string username = usernameTB.Text;
 
-            clientLogin = new ClientLogin(new UriBuilder("http", "127.0.0.1", 5297).Uri);
+            clientLogin = new ClientCommunication(new UriBuilder("http", "127.0.0.1", 5297).Uri);
             var response = await clientLogin.Login(username, "stocazzo");
 
             if (response != null)
@@ -85,6 +85,11 @@ namespace ClientApplicationTest
         private void pgcreationBtn_Click(object sender, RoutedEventArgs e)
         {
             clientLogin?.CreateNewCharacter("pippo");
+        }
+
+        private async void saveACcountBtn_Click(object sender, RoutedEventArgs e)
+        {
+            await clientLogin?.AdminSave();
         }
     }
 

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Core.Mobile;
 using Core.Server;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace Core.DB.Account
 {
@@ -34,13 +36,62 @@ namespace Core.DB.Account
 
         private ILogger? _logger { get; set; } = null;
         private SerialManager? _serialManager { get; set; } = null;
-        public AccountDB(ILogger? logger, SerialManager? serialM)
+        public string? filePath { get; set; } = "AccountDB.json";
+        public AccountDB(ILogger? logger, SerialManager? serialM, Configuration? configuration )
         {
             if (logger != null)
                 _logger= logger;
 
             _serialManager = serialM;
+
+            if (configuration is DBAccountConfiguration dbCon)
+            {
+                filePath = dbCon?.FileName;
+            }
         }
+
+        public bool Save()
+        {
+            JsonSerializerSettings settings = new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.All      
+            };
+
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+
+            if (filePath is null)
+                throw new FileNotFoundException();
+
+            using (FileStream fs = File.Open(filePath, FileMode.OpenOrCreate))
+            {
+                using (StreamWriter sw = new StreamWriter(fs))
+                {
+                    using (JsonTextWriter jw = new JsonTextWriter(sw))
+                    {
+                        jw.Formatting = Formatting.Indented;
+                        jw.Indentation = 4;
+                        //jw.StringEscapeHandling = StringEscapeHandling.EscapeNonAscii;
+
+                        var jsonSerializer = new JsonSerializer();
+                        string json = JsonConvert.SerializeObject(_dict, settings);
+                        jsonSerializer.Serialize(jw, json);
+                    }
+                }
+            }
+
+            return true;
+        }
+
+        public bool Load()
+        {
+            var serializer = new Newtonsoft.Json.JsonSerializer();
+
+            return true;
+        }
+
 
         public LOGIN_RESULT UpdateLoginInfo(AccountInfo account)
         {

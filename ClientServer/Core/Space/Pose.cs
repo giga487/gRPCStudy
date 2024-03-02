@@ -1,6 +1,8 @@
-﻿using System;
+﻿using Core.Server;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,10 +26,5 @@ namespace Core.Space
     {
         public Position Position { get; set; } = new Position();
         public Angle Angle { get; set; } = new Angle();
-
-        public void Move(Pose newPose)
-        {
-
-        }
     }
 }

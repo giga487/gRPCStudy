@@ -1,12 +1,15 @@
 ﻿using Core.Account;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Core.Server
 {
@@ -54,6 +57,12 @@ namespace Core.Server
             {
                 info.Characters.Add(pl);
                 CreateNewSerial(serializable);
+
+                if(pl.Serial is Serial sm)
+                {
+                    info.CharactersSerial.Add(sm.ID);
+                }
+
             }
 
             return true;
@@ -77,11 +86,30 @@ namespace Core.Server
             return true;
         }
 
+        public bool Save()
+        {
+
+            using (TextWriter textWriter = File.CreateText("World.json"))
+            {
+                var serializer = new Newtonsoft.Json.JsonSerializer();
+
+                foreach (var objToSave in World)
+                {
+                    serializer.Serialize(textWriter, objToSave);
+                }
+            }
+
+            return true;
+        }
+
+
     }
 
     public interface ISerializable
     {
         Serial Serial { get; internal set; }
+        void Deserialize();
+        void Serialize();
     }
     public class Serial
     {

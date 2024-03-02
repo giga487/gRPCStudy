@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package AdminCommand;
+
+// The greeting service definition.
+service AdminCommand {
+  // Sends a greeting
+  rpc Save (AdminCmd) returns (AdminResponse);
+}
+
+message AdminCmd
+{
+
+}
+
+message AdminResponse
+{
+	AdminResponseT ServerAnwser = 1;
+}
+
+enum AdminResponseT
+{
+	OK = 0;
+	BAD = 1;
+}

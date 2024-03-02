@@ -17,6 +17,16 @@ namespace Core.Mobile.LifeThings
 
 
         }
+
+        public void Deserialize()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Serialize()
+        {
+            throw new NotImplementedException();
+        }
         //public abstract ILocalizable CreateMobile(ILocalizableProperties props, string name);
 
         //public virtual MoveAck Move(DeltaPosition pos)
